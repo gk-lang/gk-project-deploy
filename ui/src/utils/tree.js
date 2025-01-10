@@ -107,7 +107,7 @@ export const filter = (tree, func, config = {}) => {
   config = getConfig(config);
   const children = config.children;
   function listFilter(list) {
-    return list
+    return (list || [])
       .map((node) => ({ ...node }))
       .filter((node) => {
         node[children] = node[children] && listFilter(node[children]);

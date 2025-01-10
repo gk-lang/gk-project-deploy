@@ -1,5 +1,5 @@
 <template>
-  <el-scrollbar>
+  <el-scrollbar ref="appScrollbarRef" >
     <div class="app-layout-container">
       <component
         :is="resolvedComponent"
@@ -12,7 +12,7 @@
   </el-scrollbar>
 </template>
 <script setup>
-import { onMounted, computed, watch, ref } from "vue";
+import { onMounted, computed, provide, ref } from "vue";
 import { useAppStore } from "@/store/modules/app";
 
 import LayoutColumn from "./LayoutColumn/index.vue";
@@ -24,7 +24,7 @@ import LayoutVertical from "./LayoutVertical/index.vue";
 
 const appStore = useAppStore();
 const theme = computed(() => appStore.getTheme);
-
+const appScrollbarRef = ref();
 // 组件映射
 const componentMap = {
   column: LayoutColumn,
@@ -41,7 +41,6 @@ const resolvedComponent = computed(() => {
   // 直接使用映射表进行解析
   return componentMap[layout] || null;
 });
-
 onMounted(() => {});
 </script>
 

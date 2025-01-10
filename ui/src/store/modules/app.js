@@ -25,7 +25,6 @@ export const useAppStore = defineStore("app", {
   },
   getters: {
     getTitle(){
-      debugger
       return this.title;
     },
     getPageLoading() {

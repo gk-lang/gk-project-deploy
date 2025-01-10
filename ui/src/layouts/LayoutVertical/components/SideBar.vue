@@ -1,5 +1,5 @@
 <template>
-  <el-scrollbar class="side-bar">
+  <el-scrollbar :class="['side-bar', `${collapse?'menu-collapse':''}`]">
     <AppLogo />
     <div class="side-menu">
       <AppMenu/>
@@ -20,7 +20,7 @@ const appStore = useAppStore()
 const permissionStore = usePermissionStore()
 // permissionStore.getRouters
 const routers = computed(() => permissionStore.getMenuTabRouters);
-
+const collapse = computed(() => appStore.getCollapse);
 const handleOpen = (key, keyPath) => {
   console.log(key, keyPath);
 };
@@ -49,6 +49,7 @@ const handleClose = (key, keyPath) => {
       border-right: 0;
       .el-menu-item,
       .el-sub-menu__title {
+        transition: var(--el-transition);
         height: var(--el-menu-item-height);
         margin: 0 10px 5px;
         overflow: hidden;
@@ -60,6 +61,35 @@ const handleClose = (key, keyPath) => {
         &.is-active {
           color: var(--el-color-white);
           background-color: var(--el-color-primary);
+        }
+        .menu-icon{
+          display: flex;
+          justify-items: center;
+          .el-icon{
+            margin-right: 0px;
+          }
+        }
+      }
+      
+    }
+  }
+  &.menu-collapse{
+    :deep(.logo-container){
+      padding-left: 16px;
+      .title{
+        display: none;
+      }
+    }
+    :deep(.side-menu){
+      .el-menu-item,.el-sub-menu__title{
+        padding: 10px;
+      }
+      .el-sub-menu {
+        &.is-active{
+          .el-sub-menu__title{
+            color: var(--el-color-white);
+            background-color: var(--el-color-primary);
+          }
         }
       }
     }

@@ -8,7 +8,7 @@ const modules = import.meta.glob("../views/**/*.{vue,js,jsx}");
 
 export const LayoutPortal = () => import("@/layouts/LayoutPortal/index.vue");
 
-export const Layout = () => import("@/layouts/Layout.vue");
+export const Layout = () => import("@/layouts/layout.vue");
 
 export const getParentLayout = () => {
   return () =>

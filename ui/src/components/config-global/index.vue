@@ -3,6 +3,7 @@
     :namespace="variables.elNamespace"
     :message="{ max: 1 }"
     :size="size"
+    :locale="zhCn"
   >
     <slot></slot>
   </ElConfigProvider>
@@ -14,7 +15,7 @@ import { useWindowSize } from '@vueuse/core'
 import { setCssVar } from '@/utils'
 import { useAppStore } from '@/store/modules/app'
 import { useDesign } from '@/hooks/web/useDesign'
-
+import zhCn from 'element-plus/es/locale/lang/zh-cn'
 const appStore = useAppStore()
 const { width } = useWindowSize()
 const { variables } = useDesign()
@@ -27,7 +28,6 @@ const props = defineProps({
     }
   },
 })
-
 
 // 监听窗口变化
 watch(

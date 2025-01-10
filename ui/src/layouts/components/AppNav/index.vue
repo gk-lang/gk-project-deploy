@@ -1,7 +1,7 @@
 <template>
   <div class="app-nav">
-    <div class="left-panel">
-      <el-icon :size="16">
+    <div :class="['left-panel',collapse?'collapse':'']">
+      <el-icon :size="16" @click="handleMenuCollapse">
         <Download />
       </el-icon>
       <AppBreadcrumb />
@@ -18,7 +18,7 @@
             :size="40"
             src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
           />
-          <span class="user-name">{{ user.username }}</span>
+          <span class="user-name">{{ user.user_name || "" }}</span>
           <el-icon class="el-icon--right">
             <arrow-down />
           </el-icon>
@@ -50,7 +50,8 @@ import { useAppStoreWithOut } from "@/store/modules/app";
 const userStore = useUserStoreWithOut();
 const appStore = useAppStoreWithOut();
 
-const user = computed(() => userStore.getUserInfo);
+const user = computed(() => userStore.getUserInfo || {});
+const collapse = computed(() => appStore.getCollapse);
 function handleCommand(type) {
   if (type === "layout") {
     userStore.logout();
@@ -58,6 +59,9 @@ function handleCommand(type) {
 }
 function goToPortalHome() {
   router.push("/portal/home");
+}
+function handleMenuCollapse(){
+  appStore.toggleCollapse();
 }
 </script>
 <style lang="scss" scoped>
@@ -82,12 +86,30 @@ function goToPortalHome() {
       padding: 0px 20px 0px 20px;
       cursor: pointer;
       color: var(--el-color-grey);
+      &:hover{
+        color: var(--el-color-primary);
+      }
     }
-    .el-breadcrumb {
+    &.collapse{
+      .el-icon {
+        transform: rotate(-90deg);
+      }
+    }
+    :deep(.el-breadcrumb) {
       display: flex;
       align-items: center;
       justify-content: center;
       height: var(--el-nav-height);
+      .el-breadcrumb__item{
+        .el-breadcrumb__inner{
+          display: flex;
+          align-items: center;
+          .app-svg{
+            margin-top: 2px;
+            margin-right: 3px;
+          }
+        }
+      }
     }
   }
   .right-panel {

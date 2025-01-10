@@ -184,7 +184,6 @@ function goRegisterPage() {
   router.push("/register");
 }
 function goForgotPasswordPage() {
-  debugger
   router.push("/forgot-password");
 }
 watch(

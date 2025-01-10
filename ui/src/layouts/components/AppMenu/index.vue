@@ -3,6 +3,7 @@ import { computed, defineComponent, unref } from "vue";
 import { ElMenu, ElScrollbar } from "element-plus";
 import { useAppStore } from "@/store/modules/app";
 import { usePermissionStore } from "@/store/modules/permission";
+import { useUserStoreWithOut } from "@/store/modules/user";
 import { useRenderMenuItem } from "./components/useRenderMenuItem";
 import { useRouter } from "vue-router";
 import { isUrl } from "@/utils/is";
@@ -24,6 +25,7 @@ export default defineComponent({
     const router = useRouter();
     const appStore = useAppStore();
     const permissionStore = usePermissionStore();
+    const userStore = useUserStoreWithOut();
 
     const layout = computed(() => appStore.getLayout);
 
@@ -36,14 +38,13 @@ export default defineComponent({
       // } else {
       //   return "horizontal";
       // }
-      return 'vertical'
+      return "vertical";
     });
+    
+    // const routers = computed(() => permissionStore.getMenuTabRouters);
 
-    const routers = computed(() =>
-      unref(layout) === "cutMenu"
-        ? permissionStore.getMenuTabRouters
-        : permissionStore.getRouters
-    );
+    const routers = computed(() => permissionStore.getRouters);
+    // const routers = computed(() => userStore.getRoleMenuList);
 
     const collapse = computed(() => appStore.getCollapse);
 
@@ -82,6 +83,7 @@ export default defineComponent({
           }
           uniqueOpened={unref(layout) === "top" ? false : unref(uniqueOpened)}
           onSelect={menuSelect}
+          popper-class="app-menu-popper"
         >
           {{
             default: () => {
@@ -97,23 +99,3 @@ export default defineComponent({
   },
 });
 </script>
-<style lang="scss" scoped>
-:deep(.el-menu) {
-  border-right: 0;
-  .el-menu-item,
-  .el-sub-menu__title {
-    height: var(--el-menu-item-height);
-    margin: 0 10px 5px;
-    overflow: hidden;
-    line-height: var(--el-menu-item-height);
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    border-radius: var(--el-border-radius-base);
-    &:hover,
-    &.is-active {
-      color: var(--el-color-white);
-      background-color: var(--el-color-primary);
-    }
-  }
-}
-</style>

@@ -1802,10 +1802,10 @@ dot-case@^3.0.4:
     no-case "^3.0.4"
     tslib "^2.0.3"
 
-dynamic-widget@^1.0.6:
-  version "1.0.6"
-  resolved "http://10.3.87.51:8082/repository/npm-group/dynamic-widget/-/dynamic-widget-1.0.6.tgz"
-  integrity sha512-wl3UVBDe3QH7FaW5Xl1ibOrV67BBWa7/78Nb046hL5rQW1ZiU0jHdbjLo6eQkmh9mAwYLIpAMkA2SJAVSyoHwQ==
+dynamic-widget@^1.0.10:
+  version "1.0.10"
+  resolved "http://10.3.87.51:8082/repository/npm-group/dynamic-widget/-/dynamic-widget-1.0.10.tgz"
+  integrity sha512-eJFyOhXIaJJXY5N4sh5KkEhvQGkzLqiCpEdz5SwzxLdMZ2xqY77j58tC8l3gfvcv7OLcIRXjiEghdvk4UCPhaQ==
   dependencies:
     crypto-js "^4.2.0"
     lodash-es "^4.17.21"

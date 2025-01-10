@@ -1,35 +1,31 @@
 <script lang="jsx">
 import { useRouter } from "vue-router";
-import { filterBreadcrumb } from "./helper";
 import {
   ref,
   watch,
   computed,
   unref,
   defineComponent,
-  TransitionGroup,
 } from "vue";
 import { ElBreadcrumb, ElBreadcrumbItem } from "element-plus";
 import { filter, treeToList } from "@/utils/tree";
-// import { Icon } from '@/components/Icon'
-import { useAppStore } from "@/store/modules/app";
 import { usePermissionStore } from "@/store/modules/permission";
-const appStore = useAppStore();
-
-// 面包屑图标
-const breadcrumbIcon = computed(() => appStore.getBreadcrumbIcon);
+import { useUserStoreWithOut } from "@/store/modules/user";
+// import AppSvg from "@/components/app-svg/index.vue";
 
 export default defineComponent({
   name: "Breadcrumb",
   setup() {
-    const { currentRoute } = useRouter();
+    const router = useRouter();
+    const { currentRoute } = router;
     const levelList = ref([]);
 
+    const userStore = useUserStoreWithOut();
     const permissionStore = usePermissionStore();
 
     const menuRouters = computed(() => {
-      const routers = permissionStore.getRouters;
-      return filterBreadcrumb(routers);
+      const roleMenuList = userStore.getRoleMenuList;
+      return roleMenuList;
     });
 
     const getBreadcrumb = () => {
@@ -37,6 +33,13 @@ export default defineComponent({
       levelList.value = filter(unref(menuRouters), (node) => {
         return node.path === currentPath;
       });
+      if (!levelList.value?.length) {
+        // const allRoutes = router.getRoutes();
+        // levelList.value = filter(allRoutes, (node) => {
+        //   return node.path === currentPath;
+        // });
+        levelList.value = [currentRoute.value]
+      }
     };
 
     const renderBreadcrumb = () => {
@@ -46,9 +49,9 @@ export default defineComponent({
         const meta = v.meta;
         return (
           <ElBreadcrumbItem to={{ path: disabled ? "" : v.path }} key={v.name}>
-            {meta?.icon && breadcrumbIcon.value ? (
+            {meta?.icon ? (
               <>
-                {/* <Icon icon={meta.icon} ></Icon> {t(v?.meta?.title || '')} */}
+                <AppSvg class="menu-icon" icon-name={v.meta.icon} size="16" />
                 {v?.meta?.title || ""}
               </>
             ) : (

@@ -1,7 +1,12 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import { Layout, LayoutPortal, getParentLayout } from "@/utils/routerHelper";
 
-export const whitelistedRoute = ["/login", "/register","/forgot-password", /^\/portal(\/.*)?$/];
+export const whitelistedRoute = [
+  "/login",
+  "/register",
+  "/forgot-password",
+  /^\/portal(\/.*)?$/,
+];
 
 export const portalRouterMap = [
   {
@@ -129,21 +134,23 @@ export const constantRouterMap = [
 export const asyncRouterMap = [
   {
     path: "/admin",
-    redirect: "/admin/index",
+    redirect: "/admin/deploy-list",
     component: Layout,
-    meta: {},
+    meta: {
+      isHiddenMenu: false, //是否在菜单列表中隐藏
+    },
     children: [
       {
-        path: "index",
-        component: () => import("@/views/demo/index.vue"),
-        name: "HSBall4",
+        path: "deploy-list",
+        component: () => import("@/views/deploy-list/index.vue"),
+        name: "deploy-list",
         meta: {
           title: "构建列表",
           icon: "vi-cib:telegram-plane",
         },
       },
     ],
-  }
+  },
 ];
 
 const router = createRouter({

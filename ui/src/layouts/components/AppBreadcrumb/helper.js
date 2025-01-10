@@ -1,5 +1,10 @@
-import { pathResolve } from '@/utils/routerHelper'
-
+// import { pathResolve } from '@/utils/routerHelper'
+import { isUrl } from '@/utils/is'
+const pathResolve = (parentPath, path) => {
+  if (isUrl(path)) return path;
+  const childPath = path.startsWith("/") || !path ? path : `/${path}`;
+  return `${parentPath}${childPath}`.replace(/\/\//g, "/").trim();
+};
 export const filterBreadcrumb = (
   routes,
   parentPath = ''
@@ -17,7 +22,7 @@ export const filterBreadcrumb = (
         ? { ...route.children[0], path: pathResolve(route.path, route.children[0].path) }
         : { ...route }
 
-    data.path = pathResolve(parentPath, data.path)
+    // data.path = pathResolve(parentPath, data.path)
 
     if (data.children) {
       data.children = filterBreadcrumb(data.children, data.path)

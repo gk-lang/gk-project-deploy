@@ -9,7 +9,7 @@
           <HeaderMenu />
         </div>
         <div class="header-func">
-          <div class="tag control" @click="goToAdminPage">
+          <div v-if="user" class="tag control" @click="goToAdminPage">
             <el-dropdown :hide-on-click="false">
               <span class="el-dropdown-link"> 控制台 </span>
             </el-dropdown>
@@ -21,7 +21,7 @@
                   :size="40"
                   src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
                 />
-                <span class="user-name">{{ user.username }}</span>
+                <span class="user-name">{{ user.user_name }}</span>
                 <el-icon class="el-icon--right">
                   <arrow-down />
                 </el-icon>
@@ -52,7 +52,7 @@
     <div class="layout-content">
       <MainContent />
     </div>
-    <div class="footer-container">
+    <div class="footer-container" v-if="isShowPortalFooter">
       <div class="footer-con-wrap">
         <div class="footer-content">
           <div class="qiao-logo">
@@ -103,6 +103,7 @@ import {
   ElIcon,
   ElAvatar,
 } from "element-plus";
+import { useAppStore } from "@/store/modules/app";
 import logoPath from "@/assets/portal/logo.png";
 import logoPath2 from "@/assets/portal/logo-白字.png";
 
@@ -114,7 +115,7 @@ import shfwPath from "@/assets/portal/售后服务.png";
 import HeaderMenu from "./components/HeaderMenu.vue";
 import MainContent from "@/layouts/components/MainContent/index.vue";
 import { useUserStoreWithOut } from "@/store/modules/user";
-
+const appStore = useAppStore();
 const router = useRouter();
 const userStore = useUserStoreWithOut();
 const supportList = ref([
@@ -234,7 +235,7 @@ const linkList = ref([
   },
 ]);
 const user = computed(() => userStore.getUserInfo);
-
+const isShowPortalFooter = computed(() => appStore.getIsShowPortalFooter);
 onMounted(() => {
   selectedSupportItem.value = supportList.value.find((x) => x.isSelected);
 });

@@ -30,6 +30,7 @@ const showTabs = ref(true);
     width: auto;
     min-height: 100%;
     margin-left: var(--el-left-menu-width);
+    transition: var(--el-transition);
     .main-header {
       position: fixed;
       top: 0;
@@ -37,6 +38,8 @@ const showTabs = ref(true);
       z-index: 10;
       width: calc(100% - var(--el-left-menu-width));
       border-bottom: 1px solid var(--el-border-color);
+      z-index: 100;
+      transition: var(--el-transition);
     }
   }
 }

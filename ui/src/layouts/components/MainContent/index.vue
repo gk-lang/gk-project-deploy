@@ -1,23 +1,36 @@
 <template>
-  <div class="main-content">
+  <div :class="['main-content', pageName]">
     <section>
-      <router-view v-slot="{ Component }">
-        <transition mode="out-in" name="fade-transform">
-          <keep-alive :include="cachedRoutes" :max="keepAliveMaxNum">
-            <component :is="Component" />
-          </keep-alive>
-          <!-- <keep-alive :include="cachedRoutes" :max="keepAliveMaxNum">
-          <router-view />
-        </keep-alive> -->
-        </transition>
+      <router-view>
+        <template #default="{ Component, route }">
+          <transition mode="out-in" name="fade-transform">
+            <keep-alive :include="cachedViews" :max="keepAliveMaxNum">
+              <component :is="Component" :key="route.fullPath"/>
+            </keep-alive>
+          </transition>
+        </template>
       </router-view>
     </section>
   </div>
 </template>
 <script setup>
-import { ref } from "vue";
+import { ref, computed, onMounted } from "vue";
 import config from "@/config/index.js";
-const cachedRoutes = ref([]);
+import { useRouter } from "vue-router";
+import { useTagsViewStore } from "@/store/modules/tagsView";
+const tagsViewStore = useTagsViewStore();
+const router = useRouter();
+const currentRoute = router.currentRoute;
 const keepAliveMaxNum = ref(config.keepAliveMaxNum);
+const cachedViews = computed(() => tagsViewStore.getCachedViews);
+const pageName = computed(() => {
+  return currentRoute.value.name;
+});
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.main-content {
+  &.archive-preview {
+    padding: 0px !important;
+  }
+}
+</style>

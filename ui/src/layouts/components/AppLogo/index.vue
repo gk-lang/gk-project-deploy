@@ -5,8 +5,10 @@
       ['logo-container-' + theme.layout]: true,
     }"
   >
-    <router-link to="/">
-      <span class="logo"> </span>
+    <router-link to="/"  >
+      <span class="logo">
+        <el-image src="/logo.png" />
+      </span>
       <span class="title">
         {{ title }}
       </span>
@@ -14,13 +16,12 @@
   </div>
 </template>
 <script setup>
-import { ref,computed } from "vue";
+import { ref, computed } from "vue";
 import { useAppStore } from "@/store/modules/app";
-
+import { ElImage } from "element-plus";
 const appStore = useAppStore();
 const theme = computed(() => appStore.getTheme);
 const title = computed(() => appStore.getTitle);
-
 </script>
 <style lang="scss" scoped>
 @mixin container {
@@ -30,13 +31,16 @@ const title = computed(() => appStore.getTitle);
   //   line-height: $base-top-bar-height;
   //   background: transparent;
 
-  text-align: center;
+  // text-align: center;
   position: absolute;
   top: 0;
   left: 0;
   z-index: $base-z-index;
   width: 100%;
   background: var(--el-menu-background-color);
+  // transition: all .2s;
+  padding-left: 25px;
+  overflow: hidden;
 }
 
 @mixin logo {
@@ -57,6 +61,7 @@ const title = computed(() => appStore.getTitle);
   text-overflow: ellipsis;
   white-space: nowrap;
   vertical-align: middle;
+  
 }
 
 .logo-container {
@@ -65,9 +70,11 @@ const title = computed(() => appStore.getTitle);
     @include container;
 
     .logo {
-      svg,
-      img {
-        @include logo;
+      .el-image {
+        svg,
+        img {
+          @include logo;
+        }
       }
     }
 
@@ -83,11 +90,10 @@ const title = computed(() => appStore.getTitle);
 
     height: $base-logo-height;
     line-height: $base-logo-height;
-    text-align: center;
+    // text-align: center;
 
     .logo {
-      svg,
-      img {
+      :deep(.el-image){
         @include logo;
       }
     }
