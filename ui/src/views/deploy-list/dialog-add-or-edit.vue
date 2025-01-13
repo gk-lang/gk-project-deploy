@@ -3,30 +3,27 @@
   <dialog-base
     v-model:visible="visibleDialog"
     :title="dialogTitle"
-    width="90%"
+    width="70%"
     custom-class="dialog-app-api-relate"
+    @cancel="cancel()"
+    @confirm="confirm()"
   >
     <div class="dialog-content">
       <DynamicForm
         :loading="saveLoading"
         ref="dynamicFormRef"
-        :formItems="formItems"
+        :formItems="dialogAddOrEditFormItems"
         v-model="formData"
         @notify="handleDynamicFormNotify"
       />
     </div>
-    <template #footer>
-      <div>
-        <el-button @click="cancel">取消</el-button>
-        <el-button type="primary" @click="confirm">确定</el-button>
-      </div>
-    </template>
   </dialog-base>
 </template>
-<script lang="jsx" setup>
-import { cloneDeep, size } from "lodash-es";
+<script name="deploy-list-dialog-add-or-edit" lang="jsx" setup>
+import { cloneDeep } from "lodash-es";
 import { ref, computed, watch, onMounted, nextTick } from "vue";
-import { ElCard, ElLink, ElButton } from "element-plus";
+import { dialogAddOrEditFormItems } from "./json-config.jsx";
+
 const emits = defineEmits(["update:isShow"]);
 const props = defineProps({
   isShow: {
@@ -42,30 +39,12 @@ const props = defineProps({
 });
 const formItems = ref([]);
 const formData = ref({})
-const searchFormRef1 = ref();
-const searchFormRef2 = ref();
-const tableRef1 = ref();
-const tableRef2 = ref();
-
 const searchFormData1 = ref({
   apiDocTypeId: "",
   apiName: "",
 });
-const searchFormData2 = ref({
-  apiName: "",
-});
 
-const tableData1 = ref([]);
-const tableData2 = ref([]);
-const oldRelateData = ref([]);
-const tablePage1 = ref({});
-const tableLoading1 = ref(false);
-const tableLoading2 = ref(false);
-const multipleSelection1 = ref([]);
-const multipleSelection2 = ref([]);
-const apiTableColumns2 = ref([]);
-
-const dialogTitle = ref("API列表");
+const dialogTitle = ref("构建配置");
 const saveLoading = ref(false);
 
 const visibleDialog = computed({
@@ -77,41 +56,10 @@ const visibleDialog = computed({
   },
 });
 function resetData() {
-  tableData2.value = [];
-  multipleSelection1.value = [];
-  multipleSelection2.value = [];
-  tablePage1.value = {};
   searchFormData1.value = {
     apiDocTypeId: "",
     apiName: "",
   };
-  searchFormData2.value = {
-    apiName: "",
-  };
-}
-function handleTable2Remove({ row }) {
-  // 删除表格1中的选中
-  const k = multipleSelection1.value.findIndex((x) => x.id === row.id);
-  if (k !== -1) {
-    const item = tableData1.value.find((x) => x.id === row.id);
-    if (item) {
-      tableRef1.value.elTableRef.toggleRowSelection(item, false);
-    } else {
-      multipleSelection1.value.splice(k, 1);
-    }
-  }
-  // 删除表格2中的选中
-  const j = multipleSelection2.value.findIndex((x) => x.id === row.id);
-  if (j !== -1) {
-    const item = tableData2.value.find((x) => x.id === row.id);
-    if (item) {
-      tableRef2.value.elTableRef.toggleRowSelection(item, false);
-    } else {
-      multipleSelection2.value.splice(k, 1);
-    }
-  }
-  const i = tableData2.value.findIndex((x) => x.id === row.id);
-  tableData2.value.splice(i, 1);
 }
 function generateSaveParams() {
   const list = tableData2.value.filter((x) => x.approveStatus === 0);
@@ -161,7 +109,6 @@ watch(
   () => props.isShow,
   async (val) => {
     if (val) {
-      dialogTitle.value = `${props.editFormData.appName}-关联API`;
       resetData();
     }
   }
@@ -236,8 +183,8 @@ onMounted(() => {
       .el-dialog__footer {
         .dialog-footer {
           display: flex;
-          justify-content: space-between;
           align-items: center;
+          justify-content: flex-end;
           .tip-msg {
             display: flex;
             align-items: center;

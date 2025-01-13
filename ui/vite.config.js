@@ -8,7 +8,7 @@ import { viteMockServe } from "vite-plugin-mock";
 import { ViteEjsPlugin } from 'vite-plugin-ejs';
 import ServerUrlCopy from "vite-plugin-url-copy";
 import { visualizer } from 'rollup-plugin-visualizer';
-
+import VueSetupExtend from 'vite-plugin-vue-setup-extend';
 import {
   createStyleImportPlugin,
   ElementPlusResolve,
@@ -22,13 +22,14 @@ function pathResolve(dir) {
 
 function loadPlugins(env, isBuild) {
   const plugins = [
+    VueJsx(),
     vue({
       script: {
         // 开启defineModel
         defineModel: true,
       },
     }),
-    VueJsx(),
+    VueSetupExtend(),
     ServerUrlCopy(),
     progress(),
     ViteEjsPlugin({
@@ -97,10 +98,10 @@ export default ({ command, mode }) => {
       port: 4000,
       proxy: {
         // 选项写法
-        "/api": {
-          target: "http://127.0.0.1:8000",
+        "/zuul": {
+          target: "http://10.3.87.217:8090/zuul",
           changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/api/, ""),
+          rewrite: (path) => path.replace(/^\/zuul/, ""),
         },
       },
       hmr: {

@@ -1137,7 +1137,7 @@
     "@vue/compiler-core" "3.5.13"
     "@vue/shared" "3.5.13"
 
-"@vue/compiler-sfc@^3.4.15", "@vue/compiler-sfc@3.5.13":
+"@vue/compiler-sfc@^3.2.29", "@vue/compiler-sfc@^3.4.15", "@vue/compiler-sfc@3.5.13":
   version "3.5.13"
   resolved "http://10.3.87.51:8082/repository/npm-group/@vue/compiler-sfc/-/compiler-sfc-3.5.13.tgz"
   integrity sha512-6VdaljMpD82w6c2749Zhf5T9u5uLBWKnVue6XWxprDobftnletJ8+oel7sexFfM3qIxNmVE7LSFGTpv6obNyaQ==
@@ -1802,10 +1802,10 @@ dot-case@^3.0.4:
     no-case "^3.0.4"
     tslib "^2.0.3"
 
-dynamic-widget@^1.0.10:
-  version "1.0.10"
-  resolved "http://10.3.87.51:8082/repository/npm-group/dynamic-widget/-/dynamic-widget-1.0.10.tgz"
-  integrity sha512-eJFyOhXIaJJXY5N4sh5KkEhvQGkzLqiCpEdz5SwzxLdMZ2xqY77j58tC8l3gfvcv7OLcIRXjiEghdvk4UCPhaQ==
+dynamic-widget@^1.0.11:
+  version "1.0.11"
+  resolved "http://10.3.87.51:8082/repository/npm-group/dynamic-widget/-/dynamic-widget-1.0.11.tgz"
+  integrity sha512-4HbsjYqW0PEhXoTxxtByMusH3pGiQjy9n/aFJw+n47rsGwZfs9KKi5B51XC5BLz9INsWj0Db4Lkm27hJsRiCqA==
   dependencies:
     crypto-js "^4.2.0"
     lodash-es "^4.17.21"
@@ -2628,7 +2628,7 @@ lru-cache@^5.1.1:
 
 magic-string@^0.25.7:
   version "0.25.9"
-  resolved "https://registry.npmmirror.com/magic-string/-/magic-string-0.25.9.tgz"
+  resolved "http://10.3.87.51:8082/repository/npm-group/magic-string/-/magic-string-0.25.9.tgz"
   integrity sha512-RmF0AsMzgt25qzqqLc1+MbHmhdx0ojF2Fvs4XnOqz2ZOBXzzkEwc/dJQZCYHAn7v1jbVOjAZfK8msRn4BxO4VQ==
   dependencies:
     sourcemap-codec "^1.4.8"
@@ -3475,6 +3475,14 @@ vite-plugin-url-copy@^1.1.4:
     clipboardy "^4.0.0"
     consola "^3.2.3"
     uqr "^0.1.2"
+
+vite-plugin-vue-setup-extend@^0.4.0:
+  version "0.4.0"
+  resolved "http://10.3.87.51:8082/repository/npm-group/vite-plugin-vue-setup-extend/-/vite-plugin-vue-setup-extend-0.4.0.tgz"
+  integrity sha512-WMbjPCui75fboFoUTHhdbXzu4Y/bJMv5N9QT9a7do3wNMNHHqrk+Tn2jrSJU0LS5fGl/EG+FEDBYVUeWIkDqXQ==
+  dependencies:
+    "@vue/compiler-sfc" "^3.2.29"
+    magic-string "^0.25.7"
 
 vite@^5.0.0, vite@^5.2.0, vite@>=2, vite@>=2.0.0, vite@>=4.0.0, vite@>=5.0.0, vite@>2.0.0-0:
   version "5.3.1"
